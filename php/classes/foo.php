@@ -28,3 +28,9 @@ private $authorId;
 	private $userName;
 };
 
+public function getAuthorId () {
+	return($this ->authorId);
+};
+public function getAvatarUrl() {
+	return ($this->AvartarUrl);
+}
