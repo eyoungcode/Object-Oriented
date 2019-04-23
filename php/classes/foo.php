@@ -1,5 +1,6 @@
 <?php
 
+
 class author {
 	/**
 	 * id for the author, this is the primary key
