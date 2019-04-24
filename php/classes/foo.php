@@ -35,21 +35,21 @@ class AUTHOR {
 	private $userName;
 
 
-public function getAuthorId () {
-	return ($this->authorId);
-}
-		public function getActivationToken() {
-	return ($this->activationToken);
-}
-			public function getEmail() {
-	return ($this->email);
-}
-				public function getHash() {
-	return ($this->hash);
-}
-					public function getUserName(){
-						return ($this->userName);
-}}
+	public function getAuthorId () {
+		return ($this->authorId);
+	}
+	public function getActivationToken() {
+		return ($this->activationToken);
+	}
+	public function getEmail() {
+		return ($this->email);
+	}
+	public function getHash() {
+		return ($this->hash);
+	}
+	public function getUserName(){
+		return ($this->userName);
+	}}
 /**
  * constructor for author
  *
