@@ -5,7 +5,9 @@ namespace Deepdiveeyoung21\ObjectOriented;
 require_once("autoload.php");
 require_once(dirname(__DIR__) . "/classes/autoload.php");
 
-class author {
+use Ramsey\Uuid\Uuid;
+
+class AUTHOR {
 	/**
 	 * id for the author, this is the primary key
 	 *  @var Uuid $authorId
