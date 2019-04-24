@@ -10,5 +10,3 @@ unique(authorUserName),
 INDEX(authorEmail),
 primary key(authorId)
 );
-
-
