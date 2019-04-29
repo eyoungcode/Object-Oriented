@@ -1,17 +1,16 @@
 <?php
 
-namespace Deepdiveeyoung21\ObjectOriented;
+namespace eyoung21\ObjectOriented;
 
 require_once("autoload.php");
 require_once(dirname(__DIR__) . "/classes/autoload.php");
-require_once(dirname(__DIR__) . "lib/vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 
 /**
  *creating a class for table 'Author'
  */
-class AUTHOR {
+class Author {
 	/**
 	 *id and primary key for table.
 	 * mentioning a function to validate uuid's, but we dont have the actual uuid yet.
@@ -19,27 +18,36 @@ class AUTHOR {
 	use ValidateUuid;
 	private $authorId;
 	/**
-	 * creating private variables for authorAvatarUrl, authorActivationToken, authorEmail, AuthorHash, authorUsername all in the same fashion. create them within a private class for distribution per our discretion later on.
+	 * creating private variables for authorAvatarUrl, authorActivationToken, authorEmail, authorHash, authorUsername all in the same fashion. create them within a private class for distribution per our discretion later on.
 	 */
 	private $authorAvatarUrl;
 	private $authorActivationToken;
 	private $authorEmail;
 	private $authorHash;
-	private $authorUsername;
+	private $authorUserName;
 	/**
-	 *accessor method for authorId
+	 * constructor for this Author
 	 *
-	 *
-	 */
+	 * @param string|Uuid $newAuthorId id of this Author or null if a new Author
+	 * @param string newAuthorAvatarUrl for the new Author
+	 * @param string|Uuid newAuthorActivationToken id for this Author or null if token already exist
+	 * @param string newAuthorEmail for new Author email or null of email already exist
+	 * @param string newAuthorHash has for this Author or null if not new Author
+	 * @param string newAuthorUserName of this Author or null if user name aleady exist
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \Exception if some other exception occurs
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 **/
 	public function __construct($newAuthorId, string $newAuthorAvatarUrl, string $newAuthorActivationToken,
-										 string $newAuthorEmail, string $newAuthorHash, string $newAuthorUsername ) {
+										 string $newAuthorEmail, string $newAuthorHash, string $newAuthorUserName) {
 		try {
 			$this->setAuthorId($newAuthorId);
 			$this->setAuthorAvatarUrl($newAuthorAvatarUrl);
 			$this->setAuthorActivationToken($newAuthorActivationToken);
 			$this->setAuthorEmail($newAuthorEmail);
 			$this->setAuthorHash($newAuthorHash);
-			$this->setAuthorUsername($newAuthorUsername);
+			$this->setAuthorUserName($newAuthorUserName);
 		}
 			//determine what exception type was thrown
 		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -85,13 +93,16 @@ class AUTHOR {
 	 * @throws \TypeError if the Url is not a string
 	 */
 	public function setAuthorAvatarUrl($newAuthorAvatarUrl) : void {
+
+
 		$newAuthorAvatarUrl = trim($newAuthorAvatarUrl);
-		$newAuthorAvatarUrl = filter_var($newAuthorAvatarUrl, FILTER_VALIDATE_URL);
+		$newAuthorAvatarUrl = filter_var($newAuthorAvatarUrl, FILTER_SANITIZE_STRING);
 		if(empty($newAuthorAvatarUrl) === true) {
-			throw(new \RangeException("no authorUrl on file"));
+			throw(new \RangeException("no avatar on file"));
 		}
-		if(strlen($newAuthorAvatarUrl)>255) {
-			throw(new \RangeException("Your avatar is to large"));
+
+		if(strlen($newAuthorAvatarUrl) >  128) {
+			//throw(new \RangeException("Your avatar is to large"));
 		}
 		$this->authorAvatarUrl = $newAuthorAvatarUrl;
 	}
@@ -172,7 +183,7 @@ class AUTHOR {
 		}
 		//enforce that it is an argon hash
 		$newAuthorHashInfo = password_get_info($newAuthorHash);
-		if($newAuthorHashInfo['argonName'] !== 'argon121') {
+		if($newAuthorHashInfo["algoName"] !== "argon2i") {
 			throw(new \InvalidArgumentException("invalid hash"));
 		}
 		if(strlen($newAuthorHash) !==128 ) {
@@ -181,20 +192,20 @@ class AUTHOR {
 		$this->authorHash = $newAuthorHash;
 	}
 	/**
-	 * accessor method for AuthorUsername
+	 * accessor method for AuthorUserName
 	 *
 	 */
-	public function getAuthorUsername():?string {
-		return $this->authorUsername;
+	public function getAuthorUserName():?string {
+		return $this->authorUserName;
 	}
-	public function setAuthorUsername(string $newAuthorUsername) : void {
-		$newAuthorUsername = trim($newAuthorUsername);
-		if(empty($newAuthorUsername) === true) {
+	public function setAuthorUserName(string $newAuthorUserName) : void {
+		$newAuthorUserName = trim($newAuthorUserName);
+		if(empty($newAuthorUserName) === true) {
 			throw(new \InvalidArgumentException("author username can not be empty"));
 		}
-		if(strlen($newAuthorUsername)>32){
-			throw(new \RangeException("Author user name not long enough"));
+		if(strlen($newAuthorUserName)>32){
+			throw(new \RangeException("Author username not long enough"));
 		}
-		$this->authorUsername = $newAuthorUsername;
+		$this->authorUserName = $newAuthorUserName;
 	}
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Deepdiveeyoung21\ObjectOriented;
+namespace eyoung21\ObjectOriented;
 /**
  * Trait to Validate a mySQL Date
  *

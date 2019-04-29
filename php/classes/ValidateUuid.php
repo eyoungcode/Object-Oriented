@@ -1,6 +1,7 @@
 <?php
-namespace Deepdiveeyoung21\ObjectOriented;
-require_once(dirname(__DIR__, 2) . "/classes/autoload.php");
+namespace eyoung21\ObjectOriented;
+require_once(dirname(__DIR__, 1) . "/lib/vendor/autoload.php");
+
 use Ramsey\Uuid\Uuid;
 /**
  * Trait to validate a uuid
@@ -32,10 +33,10 @@ trait ValidateUuid {
 				$newUuid = substr($newUuid, 0, 8) . "-" . substr($newUuid, 8, 4) . "-" . substr($newUuid,12, 4) . "-" . substr($newUuid, 16, 4) . "-" . substr($newUuid, 20, 12);
 			}
 			// 36 characters is a human readable uuid
-			if(strlen($newUuid) === 36) {
-				if(Uuid::isValid($newUuid) === false) {
-					throw(new \InvalidArgumentException("invalid uuid"));
-				}
+				if(strlen($newUuid) === 36) {
+					if(Uuid::isValid($newUuid) === false) {
+						throw(new \InvalidArgumentException("invalid uuid"));
+					}
 				$uuid = Uuid::fromString($newUuid);
 			} else {
 				throw(new \InvalidArgumentException("invalid uuid"));
