@@ -186,9 +186,6 @@ class Author {
 		if($newAuthorHashInfo["algoName"] !== "argon2i") {
 			throw(new \InvalidArgumentException("invalid hash"));
 		}
-		if(strlen($newAuthorHash) !==128 ) {
-			throw(new \RangeException("hash is to long"));
-		}
 		$this->authorHash = $newAuthorHash;
 	}
 	/**
