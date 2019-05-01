@@ -226,9 +226,6 @@ public function getAuthorByAuthorId(\PDO $pdo, $authorId) : \SplFixedArray {
 	// create query template
 	$query = "SELECT authorId, authorAvatarUrl, authorActivationToken, authorEmail, authorHash, authorUserName FROM Author WHERE authorId = :authorId";
 	$statement = $pdo->prepare($query);
-	// bind the Author id to the place holder in the template
-	$parameters = ["authorId" => authorId->getBytes()];
-	$statement->execute($parameters);
 	// build an array of Authors
 	$authors = new \SplFixedArray($statement->rowCount());
 	$statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -241,7 +238,7 @@ public function getAuthorByAuthorId(\PDO $pdo, $authorId) : \SplFixedArray {
 			// if the row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}}
-	return($authors);
+	return($authors);}
 
 /**
  * gets all Authors
@@ -262,7 +259,7 @@ public static function getAllAuthor(\PDO $pdo) : \SPLFixedArray {
 	$statement->setFetchMode(\PDO::FETCH_ASSOC);
 	while(($row = $statement->fetch()) !== false) {
 		try {
-			$author = new Author($row["authorId"],$row["authorAvatarUrl"], $row["authorActivationToken"], $row["authorEmail"], $row["authorHash"], $row["authorUserName"]););
+			$author = new Author($row["authorId"],$row["authorAvatarUrl"], $row["authorActivationToken"], $row["authorEmail"], $row["authorHash"], $row["authorUserName"]);
 			$authors[$authors->key()] = $author;
 			$authors->next();
 		} catch(\Exception $exception) {
@@ -271,4 +268,4 @@ public static function getAllAuthor(\PDO $pdo) : \SPLFixedArray {
 		}
 	}
 	return ($authors);
-}
+}}
